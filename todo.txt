@@ -1,0 +1,7 @@
+- make header on same height on every wizard subpage
+- hide not active page instead not rendering it (prepare form to be proper with all necesary fields send on submit)
+- add button to save configuration change
+- add configuration option to make it posible to show few inputs in one row
+- add better indication of current step and remaining steps 
+- add validation, do not allow to move to another page until validation terma are fullfiled 
+- mayby create new component just for making forms easier 
