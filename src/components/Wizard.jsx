@@ -1,27 +1,41 @@
 import React from "react";
-import { observer } from "mobx-react"
+import {observer} from "mobx-react"
 @observer
 class Wizard extends React.Component {
   nextStep(e) {
     e.preventDefault();
-    this.props.appStore.step = this.props.appStore.step + 1 > this.props.appStore.numberOfSteps ? this.props.appStore.numberOfSteps : this.props.appStore.step + 1;
+    this.props.appStore.step = this.props.appStore.step + 1 > this.props.appStore.numberOfSteps
+      ? this.props.appStore.numberOfSteps
+      : this.props.appStore.step + 1;
   }
   prevStep(e) {
     e.preventDefault();
-    this.props.appStore.step = this.props.appStore.step - 1 < 0 ? 0 : this.props.appStore.step - 1;
+    this.props.appStore.step = this.props.appStore.step - 1 < 0
+      ? 0
+      : this.props.appStore.step - 1;
   }
   render() {
-    const { step, numberOfSteps, formSettings, configuration } = this.props.appStore;
+    const {step, numberOfSteps, formSettings, configuration} = this.props.appStore;
     const renderElement = (el, id) => {
       switch (el.type) {
         case "input::text":
           return <div key={el.type + "_" + id} className="field">
             <label htmlFor={el.id}>{el.label}</label>
-            <input placeholder={el.placeholder} type="text" id={el.id} name={el.name} value={el.value} onChange={(e) => el.value = e.target.value} />
+            <input placeholder={el.placeholder} type="text" id={el.id} name={el.name} value={el.value} onChange={(e) => el.value = e.target.value}/>
+          </div>;
+        case "input::password":
+          return <div key={el.type + "_" + id} className="field">
+            <label htmlFor={el.id}>{el.label}</label>
+            <input placeholder={el.placeholder} type="password" id={el.id} name={el.name} value={el.value} onChange={(e) => el.value = e.target.value}/>
+          </div>;
+        case "input::email":
+          return <div key={el.type + "_" + id} className="field">
+            <label htmlFor={el.id}>{el.label}</label>
+            <input placeholder={el.placeholder} type="email" id={el.id} name={el.name} value={el.value} onChange={(e) => el.value = e.target.value}/>
           </div>;
         case "input::checkbox":
           return <div key={el.type + "_" + id} className="ui checkbox">
-            <input type="checkbox" name={el.name} id={el.id} checked={el.checked} onChange={(e) => el.checked = e.target.checked} />
+            <input type="checkbox" name={el.name} id={el.id} checked={el.checked} onChange={(e) => el.checked = e.target.checked}/>
             <label htmlFor={el.id}>{el.label}</label>
           </div>;
         case "select":
@@ -32,7 +46,8 @@ class Wizard extends React.Component {
             </select>
           </div>;
       }
-      return <div key={"field_" + id}> {el.type}</div>
+      return <div key={"field_" + id}>
+        {el.type}</div>
     };
     const currentPage = configuration[step] && configuration[step].map((el, id) => renderElement(el, id));
     return <div className="centered-form">
@@ -40,23 +55,23 @@ class Wizard extends React.Component {
         <h1>Dynamic form wizard</h1>
         {currentPage}
         <div>
-          {step > 0 &&
-            <button className="ui left labeled icon button" onClick={this.prevStep.bind(this)}>
-              <i className="left arrow icon"></i>
-              Prev
-            </button>
+          {
+            step > 0 && <button className="ui left labeled icon button" onClick={this.prevStep.bind(this)}>
+                <i className="left arrow icon"></i>
+                Prev
+              </button>
           }
-          {step < numberOfSteps - 1 &&
-            <button className="ui right floated right labeled icon button" onClick={this.nextStep.bind(this)}>
-              <i className="right arrow icon"></i>
-              Next
-        </button>
+          {
+            step < numberOfSteps - 1 && <button className="ui right floated right labeled icon button" onClick={this.nextStep.bind(this)}>
+                <i className="right arrow icon"></i>
+                Next
+              </button>
           }
-          {step === numberOfSteps - 1 &&
-            <button type="submit" className="ui positive right floated right labeled icon button">
-              <i className="right arrow icon"></i>
-              Finish
-      </button>
+          {
+            step === numberOfSteps - 1 && <button type="submit" className="ui positive right floated right labeled icon button">
+                <i className="right arrow icon"></i>
+                Finish
+              </button>
           }
         </div>
 
